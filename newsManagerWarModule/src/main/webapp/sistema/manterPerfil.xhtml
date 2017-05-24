@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/admin.xhtml">
+
+	<ui:define name="body">
+
+		<h1>Perfis de Usuários</h1>
+		<h:form id="form">
+			<p:panel id="principal">
+				<p:commandLink styleClass="btn btn-primary" ajax="false"
+					action="#{navegacaoView.incluirPerfil()}">
+		Incluir Perfil
+		    <i class="glyphicon glyphicon-plus" />
+				</p:commandLink>
+
+				<p:dataTable value="#{perfilLazyView.lazyModel}" lazy="true" var="p"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					border="1" cellpadding="2" cellspacing="0" paginator="true"
+					selection="#{perfilLazyView.selectedPerfil}"
+					paginatorPosition="bottom" rows="10" id="tbl"
+					selectionMode="single">
+					<p:ajax process="@this" event="rowSelect"
+						update=":form:perfilDetail" oncomplete="PF('perfilDialog').show()"
+						listener="#{perfilLazyView.onRowSelect}" />
+					<p:column headerText="Nome" width="250" sortBy="#{p.nome}"
+						filterBy="#{p.nome}">
+						<h:outputText value="#{p.nome}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+				<p:dialog header="Editar Perfil" widgetVar="perfilDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+					<p:panel id="perfilDetail" style="text-align:center;">
+						<h:outputLabel value="Nome:" />
+						<p:inputText value="#{perfilLazyView.perfilModel.nome}"
+							label="Nome">
+						</p:inputText>
+						<p:commandLink styleClass="btn btn-success"
+							update="growl,principal,tbl"
+							actionListener="#{perfilController.editar()}">
+							#{messages.Editar}
+		    <i class="glyphicon glyphicon-edit" />
+						</p:commandLink>
+						<i class="" />
+						<p:commandLink styleClass="btn btn-primary"
+							update="growl,principal,tbl"
+							actionListener="#{perfilController.excluir()}">
+							#{messages.Excluir}
+		    <i class="glyphicon glyphicon-remove" />
+							<p:confirm header="Confirmar" message="Deleção do perfil?"
+								icon="ui-icon-alert" />
+						</p:commandLink>
+						<p:panel id="panelDt">
+							<p:dataTable id="checkboxDT" var="p"
+								value="#{perfilLazyView.selectedPerfil.permissoes}"
+								rowKey="#{p.id}" style="margin-bottom:0"
+								selection="#{perfilController.permissoesEdit}" scrollable="true"
+								scrollHeight="150">
+								<f:facet name="header">
+		            Permissões
+		        	</f:facet>
+								<p:ajax event="toggleSelect" process="@this" />
+								<p:ajax event="rowSelect" process="@this" />
+								<p:ajax event="rowSelectCheckbox" process="@this" />
+								<p:ajax event="rowUnselectCheckbox" process="@this" />
+								<p:column selectionMode="multiple"
+									style="width:20px;text-align:center">
+
+								</p:column>
+								<p:column headerText="Nome">
+									<h:outputText value="#{p.nome}" />
+								</p:column>
+
+							</p:dataTable>
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button" process="@this"
+									update="growl,principal,tbl" styleClass="ui-confirmdialog-yes"
+									icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:panel>
+
+					</p:panel>
+				</p:dialog>
+
+			</p:panel>
+			<p:panel id="panelButoes">
+				<div class="ui-g">
+					<div class="ui-g-2">
+						<p:commandLink styleClass="btn btn-primary" ajax="false"
+							action="#{navegacaoView.menuDiversos()}">
+			#{messages.diversos}
+			    <i class="glyphicon glyphicon-triangle-left" />
+						</p:commandLink>
+					</div>
+					<div class="ui-g-2">
+						<p:commandLink styleClass="btn btn-primary" ajax="false"
+							action="#{navegacaoView.manterUsuarios()}">
+			#{messages.usuarios}
+			    <i class="glyphicon glyphicon-triangle-left" />
+						</p:commandLink>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

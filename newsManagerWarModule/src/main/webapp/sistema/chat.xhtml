@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/admin.xhtml">
+	<ui:define name="body">
+		<p:panel>
+			<h:form prependId="false">
+				<div class="form-group row">
+					<p:outputLabel value="Nome:" for="inputNome"
+						styleClass="col-sm-1 col-form-label"></p:outputLabel>
+					<div class="col-sm-3">
+						<p:inputText styleClass="form-control" id="inputNome" disabled="true"
+							value="#{messageController.user}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<p:outputLabel value="Messagem:" for="inputMsg"
+						styleClass="col-sm-1 col-form-label"></p:outputLabel>
+					<div class="col-sm-3">
+						<p:inputTextarea styleClass="form-control" id="inputMsg"
+							value="#{messageController.message.message}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-3">
+						<p:commandButton type="reset" value="#{messages.limpar}"
+							styleClass="btn btn-primary btn-lg btn-block btn-flat"
+							icon="ui-icon-refresh" />
+					</div>
+					<div class="col-sm-3">
+						<p:commandButton value="#{messages.enviar}!"
+							actionListener="#{messageController.sendMessage}"
+							styleClass="btn btn-primary btn-lg btn-block btn-flat"
+							icon="ui-icon-arrowthick-1-s" />
+					</div>
+				</div>
+
+				<p:remoteCommand name="nextMessage"
+					actionListener="#{messageController.firstUnreadMessage}"
+					oncomplete="updateMessages(xhr, status, args);" />
+
+			</h:form>
+		</p:panel>
+		<hr />
+		<p:panel>
+			<h3>Live chat</h3>
+			<div class="row current-chat-area">
+				<div class="col-md-12">
+					<ul class="media-list">
+					<li>
+					<div id="chat"></div>
+					</li>
+					</ul>
+				</div>
+			</div>
+		</p:panel>
+
+
+		<script type="text/javascript">
+setInterval("nextMessage()", 200); //update the chart every 200 ms               
+
+function updateMessages(xhr, status, args) {
+    if(!args.ok) return;
+    $('#chat').append('<li class="media"> <div class="media-body"><div class="media"><a class="pull-left" href="#"><img class="d-flex mr-3 img-circle " src=" '+args.img+' " width="64" height="64"/></a><div class="media-bod">'+args.text+'<br/> <small class="text-muted">'+args.user+ ' | '+args.dateSent+'</small></div></div></div> </li>');
+//     $('#chat').append('<div class="msg">[' +args.dateSent+ '] <strong>'+args.user+'</strong>: '+args.text+'</div>');
+} 
+</script>
+	</ui:define>
+</ui:composition>
+
+</html>

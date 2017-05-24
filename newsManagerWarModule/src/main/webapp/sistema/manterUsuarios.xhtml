@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/admin.xhtml">
+
+	<ui:define name="body">
+
+		<h1>Usuários</h1>
+		<h:form>
+			<p:panel>
+			<div class="ui-g">
+					<div class="ui-g-2">
+					<p:commandLink styleClass="btn btn-primary btn-block" id="iUsuario" ajax="false" action="#{navegacaoView.incluirUsuario()}" >
+						Incluir Usuários
+						    <i class="glyphicon glyphicon-plus" />
+					</p:commandLink>
+				</div>
+				<div class="ui-g-2">
+					<p:commandLink styleClass="btn btn-primary btn-block" ajax="false" id="mPerfil" action="#{navegacaoView.manterPerfil()}" >
+						Perfis
+						    <i class="glyphicon glyphicon-plus" />
+					</p:commandLink>
+				</div>
+			</div>
+			</p:panel>
+			<p:dataTable value="#{usuarioLazyView.lazyModel}" lazy="true" var="u"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					border="1" cellpadding="2" cellspacing="0" paginator="true"
+					selection="#{usuarioLazyView.selectedUsuario}"
+					paginatorPosition="bottom" rows="5" id="tbl" selectionMode="single">
+					<p:ajax process="@this" event="rowSelect" listener="#{usuarioLazyView.onRowSelect}"/>
+					<p:column headerText="Nome" width="250" sortBy="#{p.nome}" filterBy="#{p.nome}">
+						<h:outputText value="#{u.nome}" />
+					</p:column>
+					<p:column headerText="Login" width="250" sortBy="#{p.login}" filterBy="#{p.login}">
+						<h:outputText value="#{u.login}" />
+					</p:column>
+					<p:column headerText="Email" width="250" sortBy="#{p.email}" filterBy="#{p.email}">
+						<h:outputText value="#{u.email}" />
+					</p:column>
+
+				</p:dataTable>
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition>
+</html>
