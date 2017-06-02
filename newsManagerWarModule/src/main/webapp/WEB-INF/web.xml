@@ -17,16 +17,16 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>Push Servlet</servlet-name> -->
-<!-- 		<servlet-class>org.primefaces.push.PushServlet</servlet-class> -->
-		<!-- <init-param> -->
-		<!-- <param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name> -->
-		<!-- <param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value> -->
-		<!-- </init-param> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 		<async-supported>true</async-supported> -->
-<!-- 	</servlet> -->
+	<!-- <servlet> -->
+	<!-- <servlet-name>Push Servlet</servlet-name> -->
+	<!-- <servlet-class>org.primefaces.push.PushServlet</servlet-class> -->
+	<!-- <init-param> -->
+	<!-- <param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name> -->
+	<!-- <param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value> -->
+	<!-- </init-param> -->
+	<!-- <load-on-startup>1</load-on-startup> -->
+	<!-- <async-supported>true</async-supported> -->
+	<!-- </servlet> -->
 	<context-param>
 		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
 		<param-value>6Lf-tiAUAAAAACwWbOGEPhvmJ7nAOHdnXISWVvrD</param-value>
@@ -36,10 +36,10 @@
 		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
 		<param-value>6Lf-tiAUAAAAAGizq6JU0tksBCZUREcOjloj_3Rs</param-value>
 	</context-param>
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>Push Servlet</servlet-name> -->
-<!-- 		<url-pattern>/primepush/*</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>Push Servlet</servlet-name> -->
+	<!-- <url-pattern>/primepush/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
@@ -52,6 +52,10 @@
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
 		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
 	</filter>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/403.xhtml</location>
+	</error-page>
 	<!-- WELD -->
 	<!-- <listener> -->
 	<!-- <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> -->

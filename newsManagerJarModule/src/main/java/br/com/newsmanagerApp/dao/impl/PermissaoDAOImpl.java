@@ -21,12 +21,13 @@ public class PermissaoDAOImpl extends GenericDAOImpl<PermissoesVO, Long> impleme
 		List<PermissoesVO> listR = new ArrayList<PermissoesVO>();
 		try {
 			StringBuffer q = new StringBuffer();
-			q.append("SELECT PS.id_permissoes, PS.nome_permissoes FROM TB_PERMISSOES PS ");
+			q.append("SELECT PS.id_permissoes, PS.nome_permissoes,PS.url_permissoes,PS.menu_permissoes,PS.menu_top_id ");
+			q.append(" FROM TB_PERMISSOES PS ");	
 			q.append("INNER JOIN TB_PERFIL_PERMISSOES PP ON PP.id_permissoes = PS.id_permissoes ");
 			q.append("INNER JOIN TB_PERFIL PE ON PE.id_perfil = PP.id_perfil ");
 			q.append("INNER JOIN TB_USUARIO US ON US.id_perfil = PP.id_perfil ");
-			q.append("WHERE PS.menu_permissoes = 'S' ");
-			q.append("AND US.login_usu = :login ");
+			q.append("WHERE  ");
+			q.append(" US.login_usu = :login ");
 			Query query = entityManager.createNativeQuery(q.toString());
 			query.setParameter("login", login);
 			List<Object[]> objs = query.getResultList();
@@ -34,6 +35,15 @@ public class PermissaoDAOImpl extends GenericDAOImpl<PermissoesVO, Long> impleme
 				PermissoesVO permissoesVO = new PermissoesVO();
 				permissoesVO.setId(Long.parseLong(perm[0].toString()));
 				permissoesVO.setNome(perm[1].toString());
+				if(perm[2]!=null){
+					permissoesVO.setUrl(perm[2].toString());
+				}
+				
+				permissoesVO.setCheckMenu(perm[3].toString());
+				if(perm[4]!=null){
+					permissoesVO.setTopMenuId(Integer.parseInt(perm[4].toString()));
+				}
+				
 				listR.add(permissoesVO);
 			}
 				

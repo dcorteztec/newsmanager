@@ -26,6 +26,15 @@ public class PermissoesVO  implements Serializable{
 	@Transient
 	private boolean check;
 	
+	@Column(name="url_permissoes", nullable=true)
+	private String url;
+	
+	@Column(name="menu_permissoes", nullable=true)
+	private String checkMenu;
+	
+	@Column(name="menu_top_id", nullable=true)
+	private Integer topMenuId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +58,32 @@ public class PermissoesVO  implements Serializable{
 	public void setCheck(boolean check) {
 		this.check = check;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getCheckMenu() {
+		return checkMenu;
+	}
+
+	public void setCheckMenu(String checkMenu) {
+		this.checkMenu = checkMenu;
+	}
+
+	public Integer getTopMenuId() {
+		return topMenuId;
+	}
+
+	public void setTopMenuId(Integer topMenuId) {
+		this.topMenuId = topMenuId;
+	}
+	
+	
 	
 	
 }

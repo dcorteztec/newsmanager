@@ -57,7 +57,8 @@ public class AutenticacaoFilter implements Filter {
 			else if(autorizationController.verificaPermissaoPage(usuarioModel.getLogin(),uriFinal[0].toString())){
 					chain.doFilter(request, response);
 				}else{
-					httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+ "/login.xhtml");
+					httpServletResponse.sendError(403);
+					
 				}
 			}
 		}		

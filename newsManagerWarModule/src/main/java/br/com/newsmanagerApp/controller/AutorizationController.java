@@ -21,7 +21,7 @@ public class AutorizationController extends MainController{
 		boolean ret = false;
 		List<PermissoesVO> list = permissaoBusiness.listPermMenu(login);
 		for (PermissoesVO permissoesVO : list) {
-			if(permissoesVO.getNome().toLowerCase().equals(page)){
+			if(permissoesVO.getUrl()!=null&&permissoesVO.getUrl().toLowerCase().equals(page.toLowerCase())){
 				ret = true;
 				break;
 			}

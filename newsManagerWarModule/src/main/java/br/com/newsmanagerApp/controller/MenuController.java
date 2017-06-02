@@ -38,10 +38,12 @@ public class MenuController implements Serializable{
 		this.listPerm = listPerm;
 	} 
 	
-	public String linkMenu(String nome){
+	public String linkMenu(String nome,String url){
 		String pageRetorno = "";
-		if(nome.equals(Constantes.MENU_DIVERSOS)){
+		if(nome.toUpperCase().equals(Constantes.MENU_DIVERSOS)){
 			pageRetorno= "/sistema/diversos.xhtml?faces-redirect=true";
+		}else{
+			pageRetorno= "/sistema/"+url+".xhtml?faces-redirect=true";
 		}
 		setNamePage(nome);
 		return pageRetorno;
