@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/admin.xhtml">
+	<ui:define name="body">
+		<div class="container">
+
+			<div class="vtexIdUI-403 vtexIdUI-page" id="vtexIdUI-no-permission">
+				<div class="modal-header">
+					<h4>
+						<span class="vtexIdUI-heading">Você precisa de permissões</span> <small
+							class="pull-right">Erro 403</small>
+					</h4>
+				</div>
+
+				<div
+					class="alert alert-info alert-general alert-modal-body clearfix">
+					<i class="icon-frown icon-4x pull-left"></i>
+					<p>
+						Sua conta de email <strong>josedasilva@vtex.com.br</strong> não
+						tem acesso a esta página no momento.<br/> <small>Tente
+								entrar com outra conta de email ou falar com o suporte.</small>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<a class="vtexIdUI-back-link pull-left dead-link" href="#"
+						data-i18n="vtexid.backLink" ng-click="updatePage('auth-selector')"><i
+						class="icon-arrow-left"></i> Voltar</a>
+					<button ng-show="!isChangePswdAccessKey"
+						class="btn pull-right btn-large" type="submit"
+						data-i18n="vtexid.send">Sair</button>
+				</div>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
