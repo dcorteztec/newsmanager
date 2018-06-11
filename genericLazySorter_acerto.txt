@@ -1,0 +1,72 @@
+
+import java.lang.reflect.Field;
+import java.util.Comparator;
+
+import org.primefaces.model.SortOrder;
+
+
+public class GenericLazySorter<T> implements Comparator<T> {
+ 
+    private String sortField;
+    
+    private SortOrder sortOrder;
+     
+    public GenericLazySorter(String sortField, SortOrder sortOrder) {
+        this.sortField = sortField;
+        this.sortOrder = sortOrder;
+    }
+ 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public int compare(T p1, T p2) {
+    	String fieldValue = null;
+    	String fieldValue2 = null;
+    	Object value1 = null;
+    	Object value2 = null;
+    	Field field1 = null;
+    	Field field2 = null;	
+    	int ret = 0;
+    	int value = 0;
+        try {
+        	Class<?> clazz = p1.getClass();
+        	Class<?> clazz1 = p2.getClass();
+    	    field1 = clazz.getDeclaredField(this.sortField);
+    	    field2 = clazz1.getDeclaredField(this.sortField);
+    	    field1.setAccessible(true);
+    	    field2.setAccessible(true);
+    	    if(field1.getGenericType().getTypeName().contains("Integer")) {
+    	    	fieldValue = field1.get(p1==null?0:p1).toString();
+    	    }
+    	    if(field2.getGenericType().getTypeName().contains("Integer")) {
+    	    	fieldValue2 = field2.get(p2==null?0:p2).toString();
+    	    }
+    	    if(field1.getGenericType().getTypeName().contains("Double")) {
+    	    	fieldValue = field1.get(p1==null?0:p1).toString();
+    	    }
+    	    if(field2.getGenericType().getTypeName().contains("Double")) {
+    	    	fieldValue2 = field2.get(p2==null?0:p2).toString();
+    	    }
+    	    if(field1.getGenericType().getTypeName().contains("String")) {
+    	    	fieldValue = field1.get(p1.equals(null)?"":p1).toString();
+    	    }
+    	    if(field2.getGenericType().getTypeName().contains("String")) {
+    	    	fieldValue2 = field2.get(p2.equals(null)?"":p2).toString();
+    	    }
+            
+        	value1 = fieldValue;
+        	if(value1.equals(null)) {
+        		value1="";
+        	}
+            value2 = fieldValue2;
+            if(value2.equals(null)) {
+            	value2="";
+        	}
+			value = ((Comparable)value1).compareTo(value2);
+             
+			ret = SortOrder.ASCENDING.equals(sortOrder) ? value : -1 * value;
+            return ret;
+        }
+        catch(Exception e) {
+            throw new RuntimeException();
+        }
+    }
+}
